@@ -16,6 +16,7 @@ Open this file:
     rds/parameter_group_diff.csv
 
 Once you’re signed up for AWS, go to the RDS dashboard and then Parameter Groups. RDS manages your database servers and associated entities, such as parameter groups. A parameter group sets [Server System Variables](https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html) for MySQL. Before launching a DB instance, let’s create a custom parameter group. If we do this now, before the server is running, we won’t have to modify and restart it later.
+
 Creating a custom parameter group is an optional step. RDS has a default parameter group that works for most applications, but this tutorial breaks RDS expectations in these ways:
 
 - aggregation of more than 1 KB of data into a single cell of a table
@@ -162,6 +163,8 @@ Then you can run the query individually against your database. It will replace t
 ----------
 
 **Suggestions for next steps**. 
+
 **Fork me**. This tutorial takes the microservices perspective on web application development. Take any configuration detail or any hunk of code that excites you and experiment with it, see how it changes the application as a whole. Use it as a boilerplate for your own application, make it as different as you want. Make this project better by submitting pull requests.
+
 **Go further into AWS**. Give your S3-hosted website a pretty domain name with **Route 53**, enable HTTPS and caching with **CloudFront**, abstract all of the above configuration details with a single **CloudFormation** template, automate the deployment process with **CodeDeploy**, etc. AWS has a long list of services to explore.
 
