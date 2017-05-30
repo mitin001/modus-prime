@@ -25,7 +25,8 @@ FROM (SELECT
         sum(`stage` = 'stage')  AS `testing`,
         sum(`stage` = 'prod')   AS `production`
       FROM `hits`
-      GROUP BY `label`) `n1`
+      GROUP BY `label`
+      ORDER BY `testing` DESC) `n1`
 UNION
 SELECT
   json_object(
@@ -57,7 +58,8 @@ FROM (SELECT
         sum(`stage` = 'stage')  AS `testing`,
         sum(`stage` = 'prod')   AS `production`
       FROM `hits`
-      GROUP BY `label`) `n1`
+      GROUP BY `label`
+      ORDER BY `testing` DESC) `n1`
 UNION
 SELECT
   json_object(
@@ -81,7 +83,8 @@ FROM (SELECT
         sum(`stage` = 'stage')  AS `testing`,
         sum(`stage` = 'prod')   AS `production`
       FROM `hits`
-      GROUP BY `label`) `n1`
+      GROUP BY `label`
+      ORDER BY `testing` DESC) `n1`
 UNION
 SELECT
   json_object(
@@ -104,4 +107,5 @@ FROM (SELECT
         sum(`stage` = 'stage')  AS `testing`,
         sum(`stage` = 'prod')   AS `production`
       FROM `hits`
-      GROUP BY `label`) `n1`;
+      GROUP BY `label`
+      ORDER BY `testing` DESC) `n1`;
