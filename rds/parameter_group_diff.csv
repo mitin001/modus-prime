@@ -1,0 +1,3 @@
+Parameter,Value,Comment
+group_concat_max_len,4194304,Allows aggregating enough data (4 MB) to fit in one packet per MySQL default for max_allowed_packet (which also tells MySQL how much it’s allowed to store in one JSON cell).
+log_bin_trust_function_creators,1,Allows users without the SUPER privilege to create routines and triggers. RDS doesn’t allow us to create users with the SUPER privilege.

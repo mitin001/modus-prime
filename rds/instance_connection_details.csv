@@ -1,0 +1,6 @@
+Variable,Value,Example value,Comment
+Username,,master,
+Password,,oi8AiVeiou2Eegee,"RDS does not keep track of this. If you forgot the value you specified on instance creation, you can set the New Master Password when you modify your instance"
+Endpoint,,myinstance.123456789012.us-west-2.rds.amazonaws.com,"RDS sometimes includes the port with your endpoint: it may look like myinstance.123456789012.us-west-2.rds.amazonaws.com:3306 (colon-separated host and port). Keep track of your port if it’s not 3306, otherwise we’re only interested in the host"
+VPC,,vpc-12345678,
+Security Group,,sg-12345678,

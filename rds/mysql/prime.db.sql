@@ -1,0 +1,2 @@
+CREATE DATABASE `prime` DEFAULT CHARACTER SET = `utf8`;
+USE `prime`;

@@ -1,0 +1,12 @@
+Setting,Value,Comment
+Engine,MySQL,
+Production?,Dev/Test,Production features of RDS (e.g. Multi-AZ Deployment and Provisioned IOPS Storage) are not covered under free tier
+DB Engine Version,MySQL 5.7.16,We haven’t yet tested newer versions
+DB Instance Class,db.t2.micro,Larger instance classes are not covered under free tier
+Multi-AZ Deployment,No,Multi-AZ Deployment is not covered under free tier
+Storage Type,General Purpose (SSD),"Provisioned IOPS Storage is not covered under free tier, and Magnetic Storage is for infrequent access"
+Allocated Storage,20 GB,"This is maximum storage eligible for free tier. If you want to run several RDS instances, split this number among them"
+Publicly Accessible,Yes,This is so the connections to the database are allowed to traverse the public Internet. This is fine because we will later only allow those connections to your IP address
+Database Name,,"Leave this blank. RDS creates MySQL databases with a cp1252 West European character set, but we want UTF-8 Unicode. We will create a database once we establish a connection to it. Creating databases should not even be an RDS concern: RDS manages a database server; database servers host many databases"
+Database Port,3306,Port 3306 is officially registered for communication with a MySQL database. The applications we will use to connect to the database will be expecting this port by default
+Backup Retention Period,1 day,Watch your backup storage so it does not exceed 20 GB. Backup storage exceeding free allocation is not covered under free tier

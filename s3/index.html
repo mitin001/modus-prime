@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <title>MODUS@PRIME</title>
+
+    <script type="text/javascript">//<![CDATA[
+    window.onload = function () {
+      $.ajax({
+        url: "https://ul6ado1u.execute-api.us-west-2.amazonaws.com/stage/modus"
+      }).done(function (data) {
+        var random = function () {
+          return Math.round(Math.random() * 95)
+        };
+        var iconHash = {
+          "Apple": "\uf179",
+          "Windows": "\uf17a",
+          "Android": "\uf17b",
+          "Linux": "\uf17c",
+          "Chromium OS": "\uf268",
+          "Firefox OS": "\uf269",
+          "Laptop": "\uf109",
+          "Tablet": "\uf10a",
+          "Mobile": "\uf10b",
+          "Desktop": "\uf108",
+          "TV": "\uf26c",
+          "Safari": "\uf267",
+          "Chrome": "\uf268",
+          "Firefox": "\uf269",
+          "Opera": "\uf26a",
+          "IE": "\uf26b",
+          "Home": "\uf015",
+          "School": "\uf19c",
+          "Work": "\uf1ad",
+          "Earth": "\uf0ac",
+          "?": "\uf29c"
+        };
+        var colors = ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"];
+        var ids = ["id1", "id2", "id3", "id4", "id5", "id6", "id7"];
+
+        function fillArray(value, len) {
+          var arr = [];
+          for (var i = 0; i < len; i++) {
+            arr.push(value);
+          }
+          return arr;
+        }
+
+        function getIcon(word) {
+          return iconHash[word] || iconHash["?"];
+        }
+
+        function getColor() {
+          return colors.shift();
+        }
+
+        function getID() {
+          return ids.shift();
+        }
+
+        function getDataset(dataset) {
+          return {
+            label: dataset.label,
+            data: dataset.data,
+            backgroundColor: fillArray(getColor(), dataset.data.length)
+          };
+        }
+
+        function getBarChart(options) {
+          return {
+            data: {
+              labels: options.labels.map(getIcon),
+              datasets: options.datasets.map(getDataset)
+            },
+            type: 'bar',
+            options: {
+              title: {
+                display: true,
+                text: options.title
+              },
+              scales: {
+                xAxes: [{
+                  ticks: {
+                    fontFamily: "'FontAwesome'",
+                    fontSize: 28
+                  }
+                }]
+              },
+              responsive: true,
+              animation: {duration: 1000},
+              tooltips: {
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    return tooltipItem.yLabel;
+                  },
+                  title: function () {
+                    return "";
+                  }
+                }
+
+              }
+            }
+          };
+        }
+
+        data.forEach(function (options) {
+          var id = getID();
+          $("#wrap").append("<div class=\"item\"><canvas id=\"" + id + "\"></canvas></div>");
+          var context = document.getElementById(id).getContext("2d");
+          window[id] = new Chart(context, getBarChart(options));
+        });
+      })
+    }
+    //]]>
+
+    </script>
+
+    <style>
+
+        #wrap {
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .item {
+            float: left;
+        }
+
+        @media all and (min-width: 720px) {
+            #wrap {
+                width: 100%;
+            }
+
+            .item {
+                width: 100%;
+            }
+        }
+
+        @media all and (min-width: 1024px) {
+            #wrap {
+                width: 100%;
+            }
+
+            .item {
+                width: 50%;
+            }
+        }
+
+        .demo {
+            width: 500px;
+            margin: 0 auto;
+            padding: 10px 0;
+            font-family: sans-serif;
+            font-size: 20px;
+            color: rgba(90, 155, 212, 1);
+        }
+
+        .heading {
+            margin: 10px 0
+        }
+
+        .demo7 .heading {
+            position: relative;
+            height: 50px;
+            padding: 0;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            border: 1px solid rgba(90, 155, 212, 1);
+            line-height: 50px;
+        }
+
+        .demo7 .heading .caption {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding-left: 25px;
+            padding-right: 40px;
+            background: rgba(90, 155, 212, 1);
+            color: #fff;
+        }
+
+        .demo7 .heading .caption:before {
+            display: block;
+            content: ' ';
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            position: absolute;
+            right: 99.9%;
+            top: 0;
+            border: 0 solid transparent;
+            border-width: 50px 37px 0 0;
+            border-right-color: rgba(90, 155, 212, 1);
+        }
+
+        .demo7 .heading .title {
+            float: left;
+            padding-left: 20px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="demo demo7">
+    <div class="heading">
+        <span class="title">MODUS@PRIME</span>
+        <span class="caption">DASHBOARD OF HITS</span>
+    </div>
+</div>
+
+<div id="wrap"></div>
+
+</body>
+</html>
