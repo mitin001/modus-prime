@@ -91,6 +91,14 @@ MySQL server relies on this command to determine which database to use when exec
 
 This tutorial makes use of **AWS** **Lambda** and celebrates its ability to respond to requests without provisioning and maintaining servers. We will configure a *Lambda function*, get an *Invoke URL* for submitting requests, and deploy a *Function Package* that integrates with our database to send a response. With a request-response API we will be have a basis for developing a webpage that submits a request and presents the response in a visually appealing way.
 
+## 5.0. Create an IAM role for your Lambda function
+
+IAM roles tell your AWS resources which other AWS resources they are allowed to work with. For our Lambda function, we want it to be a part of the same Security Group as our RDS instance. A Security Group is a member of a VPC, Virtual Private Cloud. In addition to AWS Lambda Basic Execution Role, we need it to have access to Amazon VPC. For this tutorial, we will go with full access, and bring the permissions down to a particular VPC and Security Group later.
+
+Go to the IAM dashboard, and create a Role. Attach the following Managed Policies to your Role:
+* AWSLambdaBasicExecutionRole
+* AmazonVPCFullAccess
+
 ## 5.1. Create a function package
 
 Open this file:
@@ -122,7 +130,7 @@ When configuring the function, select this *Runtime*: **Node.js 6.10**.
 
 **Lambda function code**. For *Code entry type*, choose **Upload a .ZIP file**. Upload your *Function Package* from step 5.1. When specifying *Environment Variables*, specify all the keys of `process.env` in use by `index.js`. These are `HOST`, `USER`, `PASSWORD`, `DATABASE`. Specify their appropriate values. You captured this information in `instance_connection_details.csv` in step 2.3, and the database name is `prime`.
 
-**Lambda function handler and role**. For *Role*, choose **Create a custom role**. You will be taken to IAM management console where you can create a new IAM role with a *Role Name* lambda_basic_execution.
+**Lambda function handler and role**. For *Role*, choose **Choose an existing role**. For **Existing role**, choose the *Role* you created in step 5.0.
 
 **Advanced settings**. For *Memory*, choose **128 MB**. This is the minimum allowed value for a Lambda function and is more than enough for our workload. The less memory you allocate to your Lambda function, the more free invocations you get in a month. For *Timeout*, choose **1 min**. The default timeout of 3 sec is not enough for a request-response workload. We will have to establish a connection to the MySQL database, which is traditionally a job for a PHP server — known for its timeouts of 30 sec to 1 min. For *VPC*, choose the VPC you captured in `instance_connection_details.csv` in step 2.3. For *Subnets*, specify all available subnets. One data center is unlikely to be unavailable, more data centers are more unlikely to be unavailable at the same time, therefore the more subnets you send your Lambda function to, the higher its availability. For *Security Groups*, choose the Security Group you captured in `instance_connection_details.csv` in step 2.3. You opened allowed this Security Group to connect to your MySQL database in step 3.
 
