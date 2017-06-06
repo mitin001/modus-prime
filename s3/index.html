@@ -42,6 +42,29 @@
           "Earth": "\uf0ac",
           "?": "\uf29c"
         };
+        var iconClasses = {
+          "Apple": "fa-apple",
+          "Windows": "fa-windows",
+          "Android": "fa-android",
+          "Linux": "fa-linux",
+          "Chromium OS": "fa-chrome",
+          "Firefox OS": "fa-firefox",
+          "Laptop": "fa-laptop",
+          "Tablet": "fa-tablet",
+          "Mobile": "fa-mobile",
+          "Desktop": "fa-desktop",
+          "TV": "fa-tv",
+          "Safari": "fa-safari",
+          "Chrome": "fa-chrome",
+          "Firefox": "fa-firefox",
+          "Opera": "fa-opera",
+          "IE": "fa-internet-explorer",
+          "Home": "fa-home",
+          "School": "fa-university",
+          "Work": "fa-building",
+          "Earth": "fa-globe",
+          "?": "fa-question-circle-o"
+        };
         var colors = ["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"];
         var ids = ["id1", "id2", "id3", "id4", "id5", "id6", "id7"];
 
@@ -55,6 +78,10 @@
 
         function getIcon(word) {
           return iconHash[word] || iconHash["?"];
+        }
+
+        function getIconClass(word) {
+          return iconClasses[word] || iconClasses["?"];
         }
 
         function getColor() {
@@ -91,6 +118,11 @@
                     fontFamily: "'FontAwesome'",
                     fontSize: 28
                   }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
                 }]
               },
               responsive: true,
@@ -109,8 +141,10 @@
             }
           };
         }
-
-        data.forEach(function (options) {
+        data.technologies.forEach(function (technology) {
+          $(".technologies").append("<span class=\"fa " + getIconClass(technology) + "\"></span>");
+        });
+        data.charts.forEach(function (options) {
           var id = getID();
           $("#wrap").append("<div class=\"item\"><canvas id=\"" + id + "\"></canvas></div>");
           var context = document.getElementById(id).getContext("2d");
@@ -206,6 +240,15 @@
             padding-left: 20px;
         }
 
+        .technologies {
+          font-size: 28px;
+        }
+
+        .technologies > span {
+          padding: 0 48px;
+          color: rgb(102, 102, 102);
+        }
+
 
     </style>
 </head>
@@ -216,6 +259,8 @@
     <div class="heading">
         <span class="title">MODUS@PRIME</span>
         <span class="caption">DASHBOARD OF HITS</span>
+    </div>
+    <div class="technologies">
     </div>
 </div>
 

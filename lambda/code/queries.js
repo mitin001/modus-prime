@@ -25,12 +25,20 @@ const queries = {
     {event, context, ua},
     callback
   ),
-  select: callback => mysql.query(
+  selectFromCharts: callback => mysql.query(
     "SELECT * FROM `charts`",
     [],
     (error, results, fields) => {
       if (error) return callback(error, results, fields);
       callback(error, results.map(result => result.options ? JSON.parse(result.options) : {}), fields);
+    }
+  ),
+  selectFromTechnologies: (id, callback) => mysql.query(
+    "SELECT JSON_ARRAY(`os`,`browser`,`device`,`network`) AS `array` FROM `technologies` WHERE `apigw_id` = ?",
+    [id],
+    (error, results, fields) => {
+      if (error) return callback(error, results, fields);
+      callback(error, results[0] && results[0].array ? JSON.parse(results[0].array) : [], fields);
     }
   )
 };

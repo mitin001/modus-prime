@@ -29,13 +29,16 @@ exports.handler = (event, context, callback) => {
         JSON.stringify(event),
         JSON.stringify(context),
         JSON.stringify(eventParsers.parseUserAgent(event)),
-        (error, results, fields) => error ? done(error, {results, fields}) : callback()
+        (error, results, fields) => error ? done(error, {results, fields}) : queries.selectFromTechnologies(
+            results.insertId,
+            (error, results, fields) => error ? callback(undefined) : callback(results)
+          )
       );
-      const select = callback => queries.select(
-        (error, results, fields) => error ? done(error, {results, fields}) : callback(error, results, fields)
+      const select = (technologies, callback) => queries.selectFromCharts(
+        (error, results, fields) => error ? done(error, {results, fields}) : callback(error, {technologies, charts: results}, fields)
       );
-      if (eventParsers.isIncognito(event)) select(done);
-      else insert(() => select(done));
+      if (eventParsers.isIncognito(event)) select(null, done);
+      else insert(technologies => select(technologies, done));
       break;
     default:
       done(new Error(`Unsupported method "${event.httpMethod}"`));
